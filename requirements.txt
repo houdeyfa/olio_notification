@@ -1,0 +1,5 @@
+google-api-python-client
+google
+requests
+google_auth_oauthlib
+oauthlib
