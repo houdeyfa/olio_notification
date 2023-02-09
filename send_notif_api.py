@@ -23,8 +23,8 @@ emails = [x.strip() for x in email_list_file.readlines()]
 
 
 olio_user = open('olio_user.txt', 'r')
-OLIO_EMAIL = olio_user.readline()
-OLIO_PASS = olio_user.readline()
+OLIO_EMAIL = olio_user.readline().strip()
+OLIO_PASS = olio_user.readline().strip()
 
 
 
@@ -78,14 +78,14 @@ def main():
     saved_hour = saved_hour + saved_hour % 2
     send_email_to_group(emails,'Bot is (re)starting','Bot is (re)starting')
     olio_checker = StoreNameChecker(OLIO_EMAIL, OLIO_PASS, filter_keyword='')
-
+    shop_list = olio_checker.look_up_stores()
     try:
 
         while True:
             current_hour = datetime.datetime.now().hour
             current_hour = current_hour + current_hour % 2
             if current_hour != saved_hour:
-                send_email_to_group(emails, 'Hour report', 'This is just a reminder, next in 2 hours')
+                send_email_to_group(emails, 'Hour report', f"This is just a reminder, next in 2 hours, you just have the following {shop_list}")
                 saved_hour = current_hour
             olio_checker.re_login()
 
@@ -104,8 +104,8 @@ def main():
         print('\n---------------You have the following error-------------')
         print(err)
         print('---------------You have the following error-------------\n')
-    except Exception as e:
-        print(e)
+    #except Exception as e:
+        #print(e)
 
 if __name__ == '__main__':
     main()
