@@ -5,6 +5,9 @@ __pycache__/
 
 .idea/
 credentials.json
+email_sender.txt
+email_list.txt
+olio_user.txt
 
 # C extensions
 *.so
