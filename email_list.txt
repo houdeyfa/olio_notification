@@ -1,3 +1,0 @@
-friend1@example.com
-friend2@example.com
-friend3@example.com
