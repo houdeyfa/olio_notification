@@ -35,9 +35,10 @@ Please make sure you have an account [in OLIO](https://volunteers.olioex.com/reg
 Create a credential [Oauth](https://console.cloud.google.com/apis/credentials)
 
 
-Finally, create a file ``olio_user.txt`` where you will have your email address ``you@eample.com`` as the one in your OLIO account add beneath it, you need your password:
-
+Finally, create a file ``olio_user.txt`` where you will have your email address ``you@eample.com`` as the one in your OLIO account add beneath it, you need your password
+If you wish to filter (eg, you only want Tesco), You can add a filter below the password (eg, ``Tesco`` if you wish) or don't put anything if you don't want a filter
 ```commandline
 OLIO_EMAIL_ADDRESS
 OLIO_PASS
+FILTER
 ```
