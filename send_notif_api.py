@@ -19,8 +19,10 @@ email_sender_file = open('email_sender.txt', 'r')
 USER_EMAIL = email_sender_file.read()
 
 email_list_file = open('email_list.txt', 'r')
-emails = [x.strip() for x in email_list_file.readlines()]
+emails_reminder = [x.strip() for x in email_list_file.readlines()]
 
+email_list_file_available = open('email_list_available.txt', 'r')
+emails_available = [x.strip() for x in email_list_file_available.readlines()]
 
 olio_user = open('olio_user.txt', 'r')
 OLIO_EMAIL = olio_user.readline().strip()
@@ -78,7 +80,7 @@ def send_email_to_group(emails, subject, message):
 def main():
     saved_hour = datetime.datetime.now().hour
     saved_hour = saved_hour + saved_hour % 2
-    send_email_to_group(emails,'Bot is (re)starting','Bot is (re)starting')
+    send_email_to_group(emails_reminder, 'Bot is (re)starting', 'Bot is (re)starting')
     olio_checker = StoreNameChecker(OLIO_EMAIL, OLIO_PASS, filter_keyword=filter)
     shop_list = olio_checker.look_up_stores()
     try:
@@ -87,14 +89,14 @@ def main():
             current_hour = datetime.datetime.now().hour
             current_hour = current_hour + current_hour % 2
             if current_hour != saved_hour:
-                send_email_to_group(emails, 'Hour report', f"This is just a reminder, next in 2 hours, you just have the following {shop_list}")
+                send_email_to_group(emails_reminder, 'Hour report', f"This is just a reminder, next in 2 hours, you just have the following {shop_list}")
                 saved_hour = current_hour
             olio_checker.re_login()
 
             if (olio_checker.check()):
                 mess = 'Olio slot(s) are free, please check out!'
                 subject = 'Slot(s) available'
-                send_email_to_group(emails, subject, mess)
+                send_email_to_group(emails_available, subject, mess)
                 time.sleep(60*5)
 
             time.sleep(60)
