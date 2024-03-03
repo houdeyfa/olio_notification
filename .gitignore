@@ -9,6 +9,7 @@ email_sender.txt
 email_list.txt
 email_list_available.txt
 olio_user.txt
+excluded_stores.txt
 token.json
 # C extensions
 *.so

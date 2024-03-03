@@ -21,6 +21,10 @@ USER_EMAIL = email_sender_file.read()
 email_list_file = open('email_list.txt', 'r')
 emails_reminder = [x.strip() for x in email_list_file.readlines()]
 
+excluded_stores = open('excluded_stores.txt', 'r')
+excluded_stores_txt = excluded_stores.read()
+
+
 email_list_file_available = open('email_list_available.txt', 'r')
 emails_available = [x.strip() for x in email_list_file_available.readlines()]
 
@@ -81,7 +85,7 @@ def main():
     saved_hour = datetime.datetime.now().hour
     saved_hour = saved_hour + saved_hour % 2
     send_email_to_group(emails_reminder, 'Bot is (re)starting', 'Bot is (re)starting')
-    olio_checker = StoreNameChecker(OLIO_EMAIL, OLIO_PASS, filter_keyword=filter)
+    olio_checker = StoreNameChecker(OLIO_EMAIL, OLIO_PASS, filter_keyword=filter, exclude=excluded_stores_txt)
     try:
 
         while True:

@@ -45,7 +45,6 @@ class StoreNameChecker:
             store_id_url_format = store_id_url_format + f'ids%5B%5D={store_id}&'
         store_response = self.session.get(f'https://volunteers.olioex.com/api/v1/stores?{store_id_url_format}')
         list_of_stores = json.loads(store_response.text)
-        print(list_of_stores)
 
         # Get the business ids from the stores objects
         for store in list_of_stores:
@@ -72,8 +71,9 @@ class StoreNameChecker:
 
 
         for store in list_of_stores:
-            if store['business_id'] in wanted_ids:
+            if (store['business_id'] in wanted_ids) and (store['name'] not in self.exclude):
                 store_names.append(store['name'])
+
 
         return store_names
 
