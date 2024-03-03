@@ -82,19 +82,21 @@ def main():
     saved_hour = saved_hour + saved_hour % 2
     send_email_to_group(emails_reminder, 'Bot is (re)starting', 'Bot is (re)starting')
     olio_checker = StoreNameChecker(OLIO_EMAIL, OLIO_PASS, filter_keyword=filter)
-    shop_list = olio_checker.look_up_stores()
     try:
 
         while True:
             current_hour = datetime.datetime.now().hour
             current_hour = current_hour + current_hour % 2
+            shop_list = olio_checker.look_up_stores()
             if current_hour != saved_hour:
+                shop_list = olio_checker.look_up_stores()
                 send_email_to_group(emails_reminder, 'Hour report', f"This is just a reminder, next in 2 hours, you just have the following {shop_list}")
                 saved_hour = current_hour
             olio_checker.re_login()
 
-            if (olio_checker.check()):
-                mess = 'Olio slot(s) are free, please check out!'
+            stores = olio_checker.look_up_stores_filter()
+            if len(stores) > 0:
+                mess = f'Olio slot(s) are free, please check out! {stores}'
                 subject = 'Slot(s) available'
                 send_email_to_group(emails_available, subject, mess)
                 time.sleep(60*5)
