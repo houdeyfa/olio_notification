@@ -19,7 +19,7 @@ class StoreNameChecker:
         self.login_response = self.session.post('https://volunteers.olioex.com/api/v1/sessions', json=self.login_data)
 
 
-    def look_up_stores_filter(self):
+    def look_up_stores_filter(self, use_filter=True):
 
         store_ids = []
         businesses_ids = []
@@ -58,8 +58,13 @@ class StoreNameChecker:
 
         # Get the businesses names from the businesses objects
         business_response = self.session.get(f'https://volunteers.olioex.com/api/v1/businesses?{business_id_url_format}')
-
         list_of_business = json.loads(business_response.text)
+
+        if not use_filter:
+            for business in list_of_business:
+                names.append(business['name'])
+            return names
+
         for business in list_of_business:
             if business['name'].strip() in self.filter_keyword:
                 wanted_ids.append(business['id'])

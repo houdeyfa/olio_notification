@@ -87,9 +87,8 @@ def main():
         while True:
             current_hour = datetime.datetime.now().hour
             current_hour = current_hour + current_hour % 2
-            shop_list = olio_checker.look_up_stores()
+            shop_list = olio_checker.look_up_stores_filter(use_filter=False)
             if current_hour != saved_hour:
-                shop_list = olio_checker.look_up_stores()
                 send_email_to_group(emails_reminder, 'Hour report', f"This is just a reminder, next in 2 hours, you just have the following {shop_list}")
                 saved_hour = current_hour
             olio_checker.re_login()
